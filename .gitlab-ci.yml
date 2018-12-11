@@ -15,20 +15,18 @@ before_script:
 
 stages:
   - build
-  - mark_latest
+  - push_latest
 
 build:
   stage: build
   script:
     - docker build --tag $REPOSITORY_URL:$CI_COMMIT_SHA .
-    - docker push $REPOSITORY_URL:$CI_COMMIT_SHA
 
-mark_latest:
+push_latest:
   only:
     refs:
       - master
-  stage: mark_latest
+  stage: push_latest
   script:
-    - docker pull $REPOSITORY_URL:$CI_COMMIT_SHA
-    - docker tag $REPOSITORY_URL:$CI_COMMIT_SHA $REPOSITORY_URL:latest
+    - docker build --tag $REPOSITORY_URL:latest .
     - docker push $REPOSITORY_URL:latest
