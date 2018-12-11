@@ -20,6 +20,7 @@ stages:
 build:
   stage: build
   script:
+    - docker pull $REPOSITORY_URL
     - docker build --tag $REPOSITORY_URL:$CI_COMMIT_SHA .
     - docker push $REPOSITORY_URL:$CI_COMMIT_SHA
 
